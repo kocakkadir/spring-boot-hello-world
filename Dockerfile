@@ -1,9 +1,21 @@
-FROM openjdk:8-jdk-alpine
-VOLUME /tmp
+#Build
 
-ARG JAR_FILE
-ADD target/spring-boot-hello-world-1.0.0-SNAPSHOT.jar app.jar
+FROM maven:3.8.6-openjdk-18-slim AS build
 
-ENV JAR_OPTS=""
-ENV JAVA_OPTS=""
-ENTRYPOINT exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar $JAR_OPTS
+WORKDIR /home/app/src
+
+COPY . /home/app/src
+
+RUN mvn clean package -DskipTests
+
+
+
+#Package
+
+FROM openjdk:18.0.2
+
+COPY --from=build /home/app/src/target/spring-boot-hello-world-1.0.0-SNAPSHOT.jar /usr/local/lib/app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/app.jar"]
