@@ -1,14 +1,15 @@
 pipeline {
     agent any
-  
+
     stages {
          stage('Clone repository') { 
             steps { 
                 script{
                 checkout scm
-                dir(hello){
-                    git branch: development,
-                    url: https://github.com/kocakkadir/spring-boot-hello-world.git
+                dir('hello'){
+                    git branch: 'development',
+                    credentialsId: 'alfredbigger',
+                    url: 'https://github.com/kocakkadir/spring-boot-hello-world.git'
                 }
                 sh 'pwd'
                 sh 'ls'
