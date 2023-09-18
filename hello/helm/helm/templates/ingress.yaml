@@ -1,0 +1,82 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.svc.name }}-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    alb.ingress.kubernetes.io/scheme: {{ .Values.ingress.scheme }}
+    kubernetes.io/ingress.class: alb
+    {{- if eq .Values.ingress.scheme "internet-facing" }}
+    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.ingress.sslCertArn }}
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/healthcheck-path: {{ .Values.probe.pathliveness }}
+    {{ end }}
+    {{- if .Values.ingress.stickySession.enabled }}
+    alb.ingress.kubernetes.io/target-type: {{ .Values.ingress.stickySession.targetType }}
+    alb.ingress.kubernetes.io/target-group-attributes: {{ .Values.ingress.stickySession.tgAttributes }}
+    {{ end }}
+    {{- if .Values.ingress.cors.enabled }}
+    alb.ingress.kubernetes.io/cors-allow-origin: {{ .Values.ingress.cors.corsAllowOrigin }}
+    {{ end }}
+spec:
+  rules:
+  {{- if eq .Values.ingress.scheme "internal" }}
+  - host: "{{ .Values.ingress.hosts2 }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: {{ .Values.ingress.path }}
+        backend:
+          service:
+            name: {{ .Values.svc.name }}-service
+            port:
+              number: 80
+  - host: "{{ .Values.ingress.hosts }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: {{ .Values.ingress.path }}
+        backend:
+          service:
+            name: {{ .Values.svc.name }}-service
+            port:
+              number: 80
+  - host: "www.{{ .Values.ingress.hosts }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: {{ .Values.ingress.path }}
+        backend:
+          service:
+            name: {{ .Values.svc.name }}-service
+            port:
+              number: 80
+  {{ end }}
+  {{- if eq .Values.ingress.scheme "internet-facing" }}
+  - host: "{{ .Values.ingress.hosts }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: {{ .Values.ingress.path }}
+        backend:
+          service:
+            name: {{ .Values.svc.name }}-service
+            port:
+              number: 80
+  - host: "www.{{ .Values.ingress.hosts }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: {{ .Values.ingress.path }}
+        backend:
+          service:
+            name: {{ .Values.svc.name }}-service
+            port:
+              number: 80 
+  {{ end }}
+
+
+{{- end }}

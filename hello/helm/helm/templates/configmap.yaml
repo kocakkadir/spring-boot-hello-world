@@ -1,0 +1,9 @@
+{{- if .Values.appconfigs.configmap.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configmap.name }}
+  namespace: {{ .Values.namespace }}
+data: 
+  {{- .Values.configValues | nindent 2 -}}
+{{- end }}
