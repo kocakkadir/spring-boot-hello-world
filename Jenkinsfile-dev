@@ -33,21 +33,19 @@ pipeline {
                 }
             }
         }
- /*       stage('Deploy') {
+        stage('Deploy') {
             steps {
                 script{
                     sh '''
-                        TAG=$(cd $projectName && git tag --list '[0-9]*\\.[0-9]*\\.[0-9]*' --sort=-version:refname | head -n1)
-                        echo "this is dev-build-job, will be tagged $TAG"
                         aws eks --region us-west-2 update-kubeconfig --name biggergames-dev-cluster
-                        aws secretsmanager get-secret-value --secret-id $projectName-dev-env --region us-west-2 --query SecretString --output text > ./$projectName-dev-env-configmap.yaml
+                        //aws secretsmanager get-secret-value --secret-id $projectName-dev-env --region us-west-2 --query SecretString --output text > ./$projectName-dev-env-configmap.yaml
                         pwd
                         ls
-                        helm upgrade --install --values $projectName/helm/helm/dev/$projectName-values.yaml  --set-file configValues=./$projectName-dev-env-configmap.yaml --create-namespace --namespace application --set deploy.tag=${TAG} $projectName-dev $projectName/helm/helm
+                        helm upgrade --install --values hello/helm/helm/dev/$projectName-values.yaml  --create-namespace --namespace application --set deploy.tag=1.0.0 hello-dev hello/helm/helm
                     '''
                 }
             }
         }
-     */   
+        
     }
 }
