@@ -41,7 +41,7 @@ pipeline {
                         aws secretsmanager get-secret-value --secret-id hello-dev-env --region us-west-2 --query SecretString --output text > ./hello-dev-env-configmap.yaml
                         pwd
                         ls
-                        helm upgrade --install --values hello/helm/helm/dev/hello-values.yaml  --create-namespace --namespace application --set deploy.tag=1.0.0 hello-dev hello/helm/helm
+                        helm upgrade --install --values hello/helm/helm/dev/hello-values.yaml --set-file configValues=./hello-dev-env-configmap.yaml --create-namespace --namespace application --set deploy.tag=1.0.0 hello-dev hello/helm/helm
                     '''
                 }
             }
