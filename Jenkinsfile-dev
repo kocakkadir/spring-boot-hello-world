@@ -20,14 +20,14 @@ pipeline {
         stage('Build') { 
             steps { 
                 script{
-                 app = docker.build("660961155995.dkr.ecr.us-west-2.amazonaws.com/hello-dev")
+                 app = docker.build("818816801545.dkr.ecr.us-west-2.amazonaws.com/hello-dev")
                 }
             }
         }
         stage('Image Push') {
             steps {
                 script{
-                        docker.withRegistry('https://660961155995.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-id') {
+                        docker.withRegistry('https://818816801545.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-id') {
                     app.push("1.0.0")
                     }
                 }
