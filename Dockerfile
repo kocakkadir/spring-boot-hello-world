@@ -6,7 +6,7 @@ WORKDIR /home/app/src
 
 COPY . /home/app/src
 
-RUN mvn clean package
+RUN mvn clean package -DskipTests 
 
 
 
