@@ -1,10 +1,10 @@
 namespace: application
 deploy:
-  name: pas-dev
+  name: hello-dev
   replicas: 1
   port: 8080
   targetport: 8080
-  image: pas-dev
+  image: hello-dev
   tag: latest
   registry: 660961155995.dkr.ecr.us-east-1.amazonaws.com/
   resources:
@@ -15,7 +15,7 @@ deploy:
     limitMemory: 1000Mi
 svc:
   enabled: true
-  name: pas-dev
+  name: hello-dev
   port2:
     enabled: false
     targetport: 80
@@ -40,7 +40,7 @@ probe:
   port: 8080
 ingress:
   enabled: true
-  hosts: pas-dev.biggergamesapi.com
+  hosts: hello-dev.kadir.com
   scheme: internet-facing
   sslCertArn: arn:aws:acm:us-east-1:660961155995:certificate/664135f5-b718-42bb-ba9a-323542664c32
   path: "/"
@@ -54,7 +54,7 @@ ingress:
 
 configmap:
   enabled: true
-  name: pas-dev-config
+  name: hello-dev-config
   appsettings:
     enabled: false
   nlog:
