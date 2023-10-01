@@ -4,7 +4,7 @@ deploy:
   replicas: 1
   port: 8080
   targetport: 8080
-  image: hello-dev2
+  image: hello-dev
   tag: latest
   registry: 818816801545.dkr.ecr.us-west-2.amazonaws.com/
   resources:
