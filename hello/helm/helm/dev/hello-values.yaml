@@ -42,7 +42,7 @@ ingress:
   enabled: true
   hosts: hello-dev2.kadir.com
   scheme: internet-facing
-  sslCertArn: arn:aws:acm:us-west-2:818816801545:certificate/664135f5-b718-42bb-ba9a-323542664c32
+  #sslCertArn: arn:aws:acm:us-west-2:818816801545:certificate/664135f5-b718-42bb-ba9a-323542664c32
   path: "/"
   stickySession:
     enabled: true
