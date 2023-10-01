@@ -1,6 +1,6 @@
 namespace: application
 deploy:
-  name: hello-dev4
+  name: hello-dev
   replicas: 1
   port: 8080
   targetport: 8080
@@ -15,7 +15,7 @@ deploy:
     limitMemory: 1000Mi
 svc:
   enabled: true
-  name: hello-dev4
+  name: hello-dev
   port2:
     enabled: false
     targetport: 80
@@ -40,7 +40,7 @@ probe:
   port: 8080
 ingress:
   enabled: true
-  hosts: hello-dev4.kadir.com
+  hosts: hello-dev.kadir.com
   scheme: internet-facing
   #sslCertArn: arn:aws:acm:us-west-2:818816801545:certificate/664135f5-b718-42bb-ba9a-323542664c32
   path: "/"
@@ -54,7 +54,7 @@ ingress:
 
 configmap:
   enabled: true
-  name: hello-dev4-config
+  name: hello-dev-config
   appsettings:
     enabled: false
   nlog:
