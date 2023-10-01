@@ -1,10 +1,10 @@
 namespace: application
 deploy:
-  name: hello
+  name: hello-prod
   replicas: 1
   port: 8080
   targetport: 8080
-  image: hello
+  image: hello-prod
   tag: latest
   registry: 660961155995.dkr.ecr.us-east-1.amazonaws.com/
   resources:
@@ -15,7 +15,7 @@ deploy:
     limitMemory: 1000Mi
 svc:
   enabled: true
-  name: hello
+  name: hello-prod
   port2:
     enabled: false
     targetport: 80
@@ -40,7 +40,7 @@ probe:
   port: 8080
 ingress:
   enabled: true
-  hosts: hello.biggergamesapi.com
+  hosts: hello-prod.kadir.com
   scheme: internet-facing
   sslCertArn: arn:aws:acm:us-east-1:660961155995:certificate/664135f5-b718-42bb-ba9a-323542664c32
   path: "/"
@@ -53,7 +53,7 @@ ingress:
     corsAllowOrigin: http://localhost:3000  
 configmap:
   enabled: true
-  name: hello-config
+  name: hello-prod-config
   appsettings:
     enabled: false
   nlog:
