@@ -8,7 +8,7 @@ pipeline {
                 checkout scm
                 dir('hello'){
                     git branch: 'development',
-                    credentialsId: 'alfredbigger',
+                    credentialsId: '',
                     url: 'https://github.com/kocakkadir/spring-boot-hello-world.git'
                 }
                 sh 'pwd'
