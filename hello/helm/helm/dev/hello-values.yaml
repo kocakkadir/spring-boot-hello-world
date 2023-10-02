@@ -40,9 +40,9 @@ probe:
   port: 8080
 ingress:
   enabled: true
-  hosts: k8s-applicat-hellodev-73d7003485-265769611.us-west-2.elb.amazonaws.com
-  scheme: internet-facing
-  sslCertArn: arn:aws:acm:us-west-2:818816801545:certificate/664135f5-b718-42bb-ba9a-323542664c32
+  hosts: hello-dev.kadir.int
+  scheme: internal
+  #sslCertArn: arn:aws:acm:us-west-2:818816801545:certificate/664135f5-b718-42bb-ba9a-323542664c32
   path: "/"
   stickySession:
     enabled: true
